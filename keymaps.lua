@@ -48,7 +48,7 @@ function module.apply_to_config(config)
         --    end
         --  end),
         --},
-        --{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+        { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
         
         --Tabs
         { key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentTab({ confirm = false }) },
@@ -72,12 +72,11 @@ function module.apply_to_config(config)
         -- { key = "RightArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Right") },
         -- { key = "UpArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Up") },
         -- { key = "DownArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Down") },
-        
+
+        --{key="F8", mods="SHIFT", action=wezterm.action{SendString="\x1b[1;2P"}},
+
         { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
         { key = "p", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncher },
-        --{ key = "Tab", mods = "NONE", action = act.SendString("a")},
-
-        --{ key = 'j',mods = 'CTRL', wezterm.action.Nop },
 
         {key = ",", mods = 'CTRL', action = act.SpawnCommandInNewTab{
                 args = {

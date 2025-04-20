@@ -19,34 +19,33 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local mux = wezterm.mux
 
-local keymaps = require("keymaps")
-local mousemaps = require("mousemaps")
+--Config modules
+local rendering = require("rendering")
+local fonts = require("fonts")
 
 local windows = require("windows")
 local tabs = require("tabs")
 
-local fonts = require("fonts")
+local keymaps = require("keymaps")
+local mousemaps = require("mousemaps")
 
 ----------------------------------------------------
--- This will hold the configuration.
+
 local config = wezterm.config_builder()
 
 --Auto reload yeah
-config.automatically_reload_config = true
+config.automatically_reload_config = false
 
-keymaps.apply_to_config(config)
-mousemaps.apply_to_config(config)
+rendering.apply_to_config(config)
+fonts.apply_to_config(config)
 
 windows.apply_to_config(config)
 tabs.apply_to_config(config)
 
-fonts.apply_to_config(config)
+keymaps.apply_to_config(config)
+mousemaps.apply_to_config(config)
 
-
-config.front_end = "OpenGL" -- OpenGL, WebGpu, Software
-config.prefer_egl=true
-
-config.animation_fps = 120
+--Cursor
 config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_ease_in = 'EaseOut'
 config.cursor_blink_ease_out = 'EaseOut'
