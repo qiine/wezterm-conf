@@ -54,8 +54,8 @@ config.cursor_blink_rate = 950
 --Capture multiple weztern instances
 config.prefer_to_spawn_tabs = true
 
+--Return false to skip the confirmation for all processes
 wezterm.on('mux-is-process-stateful', function(process)
-  -- Return false to skip the confirmation for all processes
   return false
 end)
 

@@ -19,19 +19,22 @@ function M.apply_to_config(config)
     --set tabs name
     wezterm.on('format-tab-title', function(tab, hover)
         --Get tabs process name. (so nvim, bash...)
-        --local process = string.gsub(tab.active_pane.foreground_process_name, '(.*[/\\])(.*)', '%2')
-        local tab_name = tab.active_pane.foreground_process_name
+        local tab_name = string.gsub(tab.active_pane.foreground_process_name, '(.*[/\\])(.*)', '%2')
+        --local tab_name = tab.active_pane.foreground_process_name
 
         local atrr
         local tbg = "414141"
         local tfg
+        local underline
 
         if tab.is_active then
             atrr = { Intensity = "Bold" }
             --tbg = "414141"
+            underline = { Underline = "Single"}
         else
             atrr = { Intensity = "Normal" }
             --tbg = "black"
+            underline = { Underline = "None"}
         end
 
         if hover then
@@ -41,10 +44,21 @@ function M.apply_to_config(config)
 
         return
         {
+            { Attribute = {Intensity = "Normal"} },
+            { Attribute = {Italic = false} },
+            {Text = "  "}, --⎸
+
             --{ Background = { Color = tbg } },
             --{ Foreground = { Color = foreground } },
             { Attribute = atrr },
-            { Text = "[ "..tab_name.." ]" },
+            { Attribute = underline },
+            { Attribute = {Italic = false} },
+            { Text = tab_name },
+
+            { Attribute = {Intensity = "Normal"} },
+            { Attribute = {Underline="None"} },
+            { Attribute = {Italic = false} },
+            {Text = "  "}, --⎹
         }
     end)
 

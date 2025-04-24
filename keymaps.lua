@@ -8,27 +8,30 @@ local mux = wezterm.mux
 
 local module = {}
 
---Disable key
+--To Disable key
 --{
 --    key = 'j',
 --    mods = 'CTRL',
 --    action = wezterm.action.Nop,
 --}
 
+--Sending keys
+--{key="Backspace", mods="CTRL", action = act.SendKey{ key = "F24"} },
+
 function module.apply_to_config(config)
 
     config.disable_default_key_bindings = true
---      config.enable_kitty_keyboard = true
+    --config.enable_kitty_keyboard = true
 
-        --When set to true, each key event will be logged by the GUI layer as an INFO level log message on the stderr stream from wezterm. You will typically need to launch wezterm directly from another terminal to see this logging.
-        --help figuring out how keys are being decoded on your system, or for discovering the system-dependent "raw" key code values.
-        config.debug_key_events = true
-    
+    --When set to true, each key event will be logged by the GUI layer as an INFO level log message on the stderr stream from wezterm. You will typically need to launch wezterm directly from another terminal to see this logging.
+    --help figuring out how keys are being decoded on your system, or for discovering the system-dependent "raw" key code values.
+    config.debug_key_events = false
+
     config.keys = {
         { key = "q", mods = "CTRL|SHIFT", action = act.QuitApplication },
 
         -- Reload config
-        { key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration }, --TOdo add lecho restarted 
+        { key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration }, --TOdo add lecho restarted
 
         -- Font size adjustments
         { key = "+", mods = "CTRL", action = act.IncreaseFontSize },
@@ -49,7 +52,7 @@ function module.apply_to_config(config)
         --  end),
         --},
         { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
-        
+
         --Tabs
         { key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentTab({ confirm = false }) },
         { key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab("CurrentPaneDomain") },
@@ -60,7 +63,7 @@ function module.apply_to_config(config)
         -- { key = "x", mods = "SHIFT", action = act.CloseCurrentPane({ confirm = false }) },
         -- { key = "f", mods = "SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
         -- { key = "d", mods = "SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-       
+
         --Pane navigation
         -- { key = "j", mods = "CTRL", action = act.ActivatePaneDirection("Down") },
         -- { key = "k", mods = "CTRL", action = act.ActivatePaneDirection("Up") },
@@ -73,12 +76,15 @@ function module.apply_to_config(config)
         -- { key = "UpArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Up") },
         -- { key = "DownArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Down") },
 
-        --{key="F8", mods="SHIFT", action=wezterm.action{SendString="\x1b[1;2P"}},
+        --{key="Backspace", mods="CTRL", action=wezterm.action{SendString="\x1b[78~"} },
 
-        { key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
-        { key = "p", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncher },
+        --to disenbiguate from ^H
+        { key="Backspace", mods="CTRL", action = act.SendKey{ key = "Backspace", mods ="SHIFT|ALT"} },
 
-        {key = ",", mods = 'CTRL', action = act.SpawnCommandInNewTab{
+        { key = '*', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
+        { key = "ù", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncher },
+
+        { key = ",", mods = 'CTRL', action = act.SpawnCommandInNewTab{
                 args = {
                     '/usr/bin/nvim',
                     os.getenv('WEZTERM_CONFIG_FILE'),
@@ -103,7 +109,7 @@ end
 return module
 
 --smart copy/interupt
-  --  { 
+  --  {
   --    key = 'c',
   --    mods = 'CTRL',
   --    action = wezterm.action_callback(function(window, pane)
