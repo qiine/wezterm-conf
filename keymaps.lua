@@ -39,7 +39,7 @@ function module.apply_to_config(config)
         { key = "0", mods = "CTRL", action = act.ResetFontSize },
 
         -- Clipboard actions
-        { key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
+        { key = "c", mods = "CTRL|ALT", action = act.CopyTo("Clipboard") },
         --{key = 'c',
         --  mods = 'CTRL',
         --  action = wezterm.action_callback(function(window, pane)
@@ -54,7 +54,7 @@ function module.apply_to_config(config)
         { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
 
         --Tabs
-        { key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentTab({ confirm = false }) },
+        { key = "w", mods = "CTRL|ALT", action = act.CloseCurrentTab({ confirm = false }) },
         { key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(1) }, --Cycle tabs
 

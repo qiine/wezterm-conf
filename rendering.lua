@@ -13,7 +13,9 @@ function M.apply_to_config(config)
     config.front_end = "OpenGL" -- OpenGL, WebGpu, Software
     config.prefer_egl = true
 
-    config.animation_fps = 120
+    config.animation_fps = 100
+
+    config.max_fps = 100
 
 end
 
