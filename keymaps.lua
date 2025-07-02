@@ -56,7 +56,7 @@ function module.apply_to_config(config)
         --Tabs
         { key = "w", mods = "CTRL|ALT", action = act.CloseCurrentTab({ confirm = false }) },
         { key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab("CurrentPaneDomain") },
-        { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(1) }, --Cycle tabs
+        { key = "Tab", mods = "CTRL|ALT", action = act.ActivateTabRelative(1) }, --Cycle tabs
 
         --Panes
         -- { key = "N", mods = "SHIFT|CTRL", action = act.SpawnWindow },
