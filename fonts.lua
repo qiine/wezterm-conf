@@ -39,10 +39,14 @@ function M.apply_to_config(config)
     }
     --config.font_locator = "ConfigDirsOnly"
 
-    --🤔
-    --⛬ ⫶ ∴ ⋮ ▪ ∷ ⁘ ᠅ ⸭ ⁖ ᐧ 𝋣
+    -- 🤔
+    -- ⛬ ⫶ ∴ ⋮ ▪ ∷ ⁘ ᠅ ⸭ ⁖ ᐧ 𝋣
     -- ⏺ 🞄 ᭼ 𝀝 𝀛
-    --== g a @ &
+    -- == -> > <= >
+    -- () {} [] //
+    -- & # @
+    -- gG aA bB jJ iI wW xX
+    -- 0 1 2 3 4 5 6 7 8 9
     config.font = wezterm.font_with_fallback
     {
         {
@@ -52,26 +56,27 @@ function M.apply_to_config(config)
             stretch = "Normal",
             scale = 1.0,
             harfbuzz_features = {
-                "calt=0", "clig=0", "liga=0", --no ligature
-                "cv02", --g
-                "ss05", --@
-                "ss03", --&
-                "cv14", --3
-                "cv15", --*
+                "calt=0", "clig=0", "liga=0", -- no ligature
+                "cv02", -- g
+                "ss05", -- @
+                "ss03", -- &
+                "cv14", -- 3
+                "cv15", -- *
             }
         },
+
         {
-            family = noto,  -- deja
+            family = noto,
             style = "Normal",
             weight = "Medium",
             stretch = "Normal",
-            scale = 1.2,
+            scale = 1.0,
             harfbuzz_features = { "calt=0", "clig=0", "liga=0" } --set Ligature off
         }
     }
 
 
-    config.font_size = 16
+    config.font_size = 17
     config.line_height = 1.0    --non 1.0 buggy
     config.cell_width  = 1.0
 
