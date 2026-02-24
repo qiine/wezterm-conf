@@ -1,16 +1,16 @@
 
--- Keympas --
+-- Keymaps --
 
 local wezterm = require("wezterm")
-local act = wezterm.action
-local mux = wezterm.mux
+local act     = wezterm.action
+local mux     = wezterm.mux
 ----------------------------------
 
 local module = {}
 
 --To Disable key
 --{
---    key = 'j',
+--    key = 'j',RM
 --    mods = 'CTRL',
 --    action = wezterm.action.Nop,
 --}
@@ -19,7 +19,6 @@ local module = {}
 --{key="Backspace", mods="CTRL", action = act.SendKey{ key = "F24"} },
 
 function module.apply_to_config(config)
-
     config.disable_default_key_bindings = true
     --config.enable_kitty_keyboard = true
 
@@ -28,15 +27,15 @@ function module.apply_to_config(config)
     config.debug_key_events = false
 
     config.keys = {
-        { key = "q", mods = "CTRL|SHIFT", action = act.QuitApplication },
+        { key = "q", mods = "ALT|SHIFT", action = act.QuitApplication },
 
         -- Reload config
-        { key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration }, --TOdo add lecho restarted
+        { key = "¶", mods = "CTRL", action = act.ReloadConfiguration }, --TOdo add lecho restarted
 
         -- Font size adjustments
         { key = "+", mods = "CTRL", action = act.IncreaseFontSize },
         { key = "-", mods = "CTRL", action = act.DecreaseFontSize },
-        { key = "0", mods = "CTRL", action = act.ResetFontSize },
+        -- { key = "0", mods = "CTRL", action = act.ResetFontSize },
 
         -- Clipboard actions
         { key = "c", mods = "CTRL|ALT", action = act.CopyTo("Clipboard") },
@@ -50,12 +49,12 @@ function module.apply_to_config(config)
         --      window:perform_action(wezterm.action{ CopyTo = 'ClipboardAndPrimarySelection' }, pane)
         --    end
         --  end),
-        --},
-        { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+            --},
+        { key = "v", mods = "CTRL|ALT", action = act.PasteFrom("Clipboard") },
 
         --Tabs
         { key = "w", mods = "CTRL|ALT", action = act.CloseCurrentTab({ confirm = false }) },
-        { key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab("CurrentPaneDomain") },
+        { key = "t", mods = "ALT|CTRL|SHIFT|", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "Tab", mods = "CTRL|ALT", action = act.ActivateTabRelative(1) }, --Cycle tabs
 
         --Panes
@@ -78,7 +77,7 @@ function module.apply_to_config(config)
 
         --{key="Backspace", mods="CTRL", action=wezterm.action{SendString="\x1b[78~"} },
 
-        --to disenbiguate from ^H
+        --to disambiguate from ^H
         { key="Backspace", mods="CTRL", action = act.SendKey{ key = "Backspace", mods ="SHIFT|ALT"} },
 
         { key = '*', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
