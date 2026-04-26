@@ -27,9 +27,9 @@ function module.apply_to_config(config)
     config.debug_key_events = false
 
     config.keys = {
-        { key = "q", mods = "ALT|SHIFT", action = act.QuitApplication },
-
-        -- Reload config
+        -- ALTGR+q
+        { key = "@", mods = "CTRL", action = act.QuitApplication },
+        -- Reload config -- ctrl + altgr + r
         { key = "¶", mods = "CTRL", action = act.ReloadConfiguration }, --TOdo add lecho restarted
 
         -- Font size adjustments
@@ -38,7 +38,7 @@ function module.apply_to_config(config)
         -- { key = "0", mods = "CTRL", action = act.ResetFontSize },
 
         -- Clipboard actions
-        { key = "c", mods = "CTRL|ALT", action = act.CopyTo("Clipboard") },
+        { key = "¢", mods = "CTRL", action = act.CopyTo("Clipboard") },
         --{key = 'c',
         --  mods = 'CTRL',
         --  action = wezterm.action_callback(function(window, pane)
@@ -50,11 +50,11 @@ function module.apply_to_config(config)
         --    end
         --  end),
             --},
-        { key = "v", mods = "CTRL|ALT", action = act.PasteFrom("Clipboard") },
+        { key = "„", mods = "CTRL", action = act.PasteFrom("Clipboard") },
 
         --Tabs
-        { key = "w", mods = "CTRL|ALT", action = act.CloseCurrentTab({ confirm = false }) },
-        { key = "t", mods = "ALT|CTRL|SHIFT|", action = act.SpawnTab("CurrentPaneDomain") },
+        { key = "ł", mods = "CTRL", action = act.CloseCurrentTab({ confirm = false }) },
+        { key = "ŧ", mods = "CTRL", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "Tab", mods = "CTRL|ALT", action = act.ActivateTabRelative(1) }, --Cycle tabs
 
         --Panes
@@ -80,17 +80,10 @@ function module.apply_to_config(config)
         --to disambiguate from ^H
         { key="Backspace", mods="CTRL", action = act.SendKey{ key = "Backspace", mods ="SHIFT|ALT"} },
 
+        -- { key="e", mods="CTRL|ALT", action = act.SendKey{ key = "e", mods ="CTRL|ALT"} },
+
         { key = '*', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
         { key = "ù", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncher },
-
-        { key = ",", mods = 'CTRL', action = act.SpawnCommandInNewTab{
-                args = {
-                    '/usr/bin/nvim',
-                    os.getenv('WEZTERM_CONFIG_FILE'),
-                },
-            }
-        },
-
     }--config keys
 end
 
