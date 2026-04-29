@@ -52,18 +52,19 @@ function module.apply_to_config(config)
             --},
         { key = "„", mods = "CTRL", action = act.PasteFrom("Clipboard") },
 
-        --Tabs
+        -- Tabs
         { key = "ł", mods = "CTRL", action = act.CloseCurrentTab({ confirm = false }) },
         { key = "ŧ", mods = "CTRL", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "Tab", mods = "CTRL|ALT", action = act.ActivateTabRelative(1) }, --Cycle tabs
 
-        --Panes
+        -- Panes
         -- { key = "N", mods = "SHIFT|CTRL", action = act.SpawnWindow },
-        -- { key = "x", mods = "SHIFT", action = act.CloseCurrentPane({ confirm = false }) },
-        -- { key = "f", mods = "SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-        -- { key = "d", mods = "SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 
-        --Pane navigation
+        { key = "ł", mods = "CTRL|ALT", action = act.CloseCurrentPane({ confirm = false }) },
+        { key = "„", mods = "CTRL|ALT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+        { key = "ħ", mods = "CTRL|ALT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+        -- Pane navigation
         -- { key = "j", mods = "CTRL", action = act.ActivatePaneDirection("Down") },
         -- { key = "k", mods = "CTRL", action = act.ActivatePaneDirection("Up") },
         -- { key = "h", mods = "CTRL", action = act.ActivatePaneDirection("Left") },
@@ -77,13 +78,14 @@ function module.apply_to_config(config)
 
         --{key="Backspace", mods="CTRL", action=wezterm.action{SendString="\x1b[78~"} },
 
-        --to disambiguate from ^H
+        -- to disambiguate from ^H
         { key="Backspace", mods="CTRL", action = act.SendKey{ key = "Backspace", mods ="SHIFT|ALT"} },
 
         -- { key="e", mods="CTRL|ALT", action = act.SendKey{ key = "e", mods ="CTRL|ALT"} },
 
         { key = '*', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
         { key = "ù", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncher },
+
     }--config keys
 end
 
