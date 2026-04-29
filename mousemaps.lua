@@ -59,7 +59,7 @@ local keys =
     --{event = {Drag = {streak = 1, button = 'Left'}}, mods = "ALT", action = wact.ExtendSelectionToMouseCursor("Block") },
 }
 --
---local keys_nvim = 
+--local keys_nvim =
 --{
 --    {--Ctrl+wheel zoom
 --        event = { Down = { streak = 1, button = { WheelUp = 1 } } },
@@ -96,14 +96,14 @@ local keys =
 --end)
 
 function module.apply_to_config(config)
-    
+
     --config.bypass_mouse_reporting_modifiers = 'ALT'
     config.bypass_mouse_reporting_modifiers = 'NONE'
     config.disable_default_mouse_bindings = true
     -----------------------------------------------------------------
-    
+
     config.mouse_bindings = keys
-    
+
 
     --config.mouse_bindings = {}
 

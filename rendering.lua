@@ -9,7 +9,6 @@ local mux = wezterm.mux
 local M = {}
 
 function M.apply_to_config(config)
-
     config.front_end = "OpenGL" -- OpenGL, WebGpu, Software
     config.prefer_egl = true
 

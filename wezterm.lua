@@ -15,26 +15,23 @@
 -- end
 
 --Pull wezterm API
-local wezterm = require("wezterm")
-local act = wezterm.action
-local mux = wezterm.mux
+local wez = require("wezterm")
+local act = wez.action
+local mux = wez.mux
 
 --Config modules
 local rendering = require("rendering")
-local fonts = require("fonts")
+local fonts     = require("fonts")
 
 local windows = require("windows")
-local tabs = require("tabs")
+local tabs    = require("tabs")
 
-local keymaps = require("keymaps")
+local keymaps   = require("keymaps")
 local mousemaps = require("mousemaps")
 
 ----------------------------------------------------
 
-local config = wezterm.config_builder()
-
---Auto reload yeah
-config.automatically_reload_config = false
+local config = wez.config_builder()
 
 rendering.apply_to_config(config)
 fonts.apply_to_config(config)
@@ -42,8 +39,17 @@ fonts.apply_to_config(config)
 windows.apply_to_config(config)
 tabs.apply_to_config(config)
 
+
+-- Auto reload conf
+config.automatically_reload_config = false
+
 keymaps.apply_to_config(config)
 mousemaps.apply_to_config(config)
+
+
+config.term = "wezterm" -- needed to have undercurl
+config.default_prog = { '/bin/bash' }
+
 
 --Cursor
 config.default_cursor_style = 'BlinkingBar'
@@ -51,16 +57,17 @@ config.cursor_blink_ease_in = 'EaseOut'
 config.cursor_blink_ease_out = 'EaseOut'
 config.cursor_blink_rate = 950
 
---Capture multiple weztern instances
-config.prefer_to_spawn_tabs = true
 
---Return false to skip the confirmation for all processes
-wezterm.on('mux-is-process-stateful', function(process)
-  return false
+-- Capture multiple weztern instances
+config.prefer_to_spawn_tabs = false
+
+-- Return false to skip the confirmation for all processes
+wez.on('mux-is-process-stateful', function(process)
+    return false
 end)
 
---log
-wezterm.log_info("hello wezterm! my name is " .. wezterm.hostname())
+-- log
+wez.log_info("hello wezterm! my name is " .. wez.hostname())
 
 
 --Style

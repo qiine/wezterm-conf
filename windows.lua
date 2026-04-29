@@ -10,10 +10,9 @@ local mux = wezterm.mux
 local M = {}
 
 function M.apply_to_config(config)
+    config.window_decorations = "NONE" -- RESIZE, NONE, INTEGRATED_BUTTONS
+    config.window_background_opacity = 1
 
-    config.window_decorations = "NONE" -- RESIZE, NONE, INTEGRATED_BUTTONS 
-    config.window_background_opacity = 0.85
-    
     config.adjust_window_size_when_changing_font_size = false
     config.use_resize_increments = false -- true is buggy
 
@@ -29,9 +28,7 @@ function M.apply_to_config(config)
 
     config.window_close_confirmation = 'NeverPrompt'
 
-    config.max_fps = 120
-    
-    config.scrollback_lines = 5000
+    config.scrollback_lines = 10000
 end
 
 return M

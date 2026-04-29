@@ -27,7 +27,6 @@ local mona = "Monaspace Argon Var"
 local com = "CommitMonoCustom"
 
 function M.apply_to_config(config)
-
     --Tells wezterm to look first for fonts in the directory named `fonts`
     --Located alongside your `wezterm.lua` file.
     --Can list mutliple paths
@@ -45,10 +44,15 @@ function M.apply_to_config(config)
     -- == -> > <= >
     -- () {} [] //
     -- & # @
-    -- gG aA bB jJ iI wW xX
+    -- aA bB fF gG jJ iI wW xX
     -- 0 1 2 3 4 5 6 7 8 9
     config.font = wezterm.font_with_fallback
     {
+        -- {
+        --     family = "Azeret Mono",
+        --     style = "Normal",
+        -- },
+
         {
             family = fira,
             style = "Normal",
@@ -65,27 +69,28 @@ function M.apply_to_config(config)
             }
         },
 
-        {
-            family = noto,
-            style = "Normal",
-            weight = "Medium",
-            stretch = "Normal",
-            scale = 1.0,
-            harfbuzz_features = { "calt=0", "clig=0", "liga=0" } --set Ligature off
-        }
+        -- {
+        --     family = noto,
+        --     style = "Normal",
+        --     weight = "Medium",
+        --     stretch = "Normal",
+        --     scale = 1.0,
+        --     harfbuzz_features = { "calt=0", "clig=0", "liga=0" } --set Ligature off
+        -- }
     }
 
 
-    config.font_size = 17
-    config.line_height = 1.0    --non 1.0 buggy
+    config.font_size = 16
+    config.line_height = 1.0    -- non 1.0 buggy
     config.cell_width  = 1.0
 
     --config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } --set Ligature off
 
     --Hinting and AA
     config.freetype_load_target = 'Normal' -- Normal Light Mono
-    --config.underline_position = -2.5
-    --config.underline_thickness = "1.5pt"
+
+    config.underline_position = -9
+    config.underline_thickness = '225%'
 
     --config.use_cap_height_to_scale_fallback_fonts = true
 
