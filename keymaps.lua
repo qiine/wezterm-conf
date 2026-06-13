@@ -1,24 +1,14 @@
 
 -- Keymaps --
 
-local wezterm = require("wezterm")
-local act     = wezterm.action
-local mux     = wezterm.mux
+local wez = require("wezterm")
+local act = require("wezterm").action
+local mux = require("wezterm").mux
 ----------------------------------
 
-local module = {}
+local M = {}
 
---To Disable key
---{
---    key = 'j',RM
---    mods = 'CTRL',
---    action = wezterm.action.Nop,
---}
-
---Sending keys
---{key="Backspace", mods="CTRL", action = act.SendKey{ key = "F24"} },
-
-function module.apply_to_config(config)
+function M.apply_to_config(config)
     config.disable_default_key_bindings = true
     --config.enable_kitty_keyboard = true
 
@@ -38,31 +28,84 @@ function module.apply_to_config(config)
         -- { key = "0", mods = "CTRL", action = act.ResetFontSize },
 
         -- Clipboard actions
-        { key = "¢", mods = "CTRL", action = act.CopyTo("Clipboard") },
-        --{key = 'c',
-        --  mods = 'CTRL',
-        --  action = wezterm.action_callback(function(window, pane)
-        --    local sel = window:get_selection_text_for_pane(pane)
-        --    if (not sel or sel == '') then
-        --      window:perform_action(wezterm.action.SendKey{ key='c', mods='CTRL' }, pane)
-        --    else
-        --      window:perform_action(wezterm.action{ CopyTo = 'ClipboardAndPrimarySelection' }, pane)
-        --    end
-        --  end),
-            --},
-        { key = "„", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+        {
+            key = 'c',
+            mods = 'CTRL',
+            action = wez.action_callback(function(window, pane)
+                if pane:is_alt_screen_active() then  -- Is in some TUI
+                    window:perform_action(act.SendKey({key='c', mods='CTRL'}), pane)
+                else
+                    window:perform_action(act({CopyTo = 'ClipboardAndPrimarySelection'}), pane)
+                end
+            end),
+        },
+        {
+            key = "v",
+            mods = "CTRL",
+            action = wez.action_callback(function(window, pane)
+                if pane:is_alt_screen_active() then  -- Is in some TUI
+                    window:perform_action(act.SendKey({ key = "v", mods = "CTRL" }), pane)
+                else
+                    window:perform_action(act.PasteFrom("Clipboard"), pane)
+                end
+            end),
+        },
 
-        -- Tabs
-        { key = "ł", mods = "CTRL", action = act.CloseCurrentTab({ confirm = false }) },
+
+        --{key="Backspace", mods="CTRL", action=wezterm.action{SendString="\x1b[78~"} },
+
+        -- to disambiguate from ^H
+        { key="Backspace", mods="CTRL", action = act.SendKey{ key = "Backspace", mods ="SHIFT|ALT"} },
+
+        {
+            key = "PageUp",
+            mods = "NONE",
+            action = wez.action_callback(function(window, pane)
+                if pane:is_alt_screen_active() then
+                    window:perform_action(act.SendKey({ key = "PageUp", mods = "NONE" }), pane)
+                else
+                    window:perform_action(act.ScrollByPage(-1), pane)
+                end
+            end),
+        },
+        {
+            key = "PageDown",
+            mods = "NONE",
+            action = wez.action_callback(function(window, pane)
+                if pane:is_alt_screen_active() then
+                    window:perform_action(act.SendKey({key = "PageDown", mods = "NONE"}), pane)
+                else
+                    window:perform_action(act.ScrollByPage(1), pane)
+                end
+            end),
+        },
+
+        -- ## Tabs
+        {
+            key = "w",
+            mods = "CTRL",
+            action = wez.action_callback(function(window, pane)
+                if pane:is_alt_screen_active() then
+                    window:perform_action(act.SendKey({key = "w", mods = "CTRL"}), pane)
+                else
+                    local mux_window = window:mux_window()
+                    local tabs = mux_window:tabs()
+
+                    if #tabs > 1 then
+                        window:perform_action(act.CloseCurrentTab({confirm = false}), pane)
+                    end
+                end
+            end),
+        },
         { key = "ŧ", mods = "CTRL", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "Tab", mods = "CTRL|ALT", action = act.ActivateTabRelative(1) }, --Cycle tabs
 
-        -- Panes
+        -- ## Panes
         -- { key = "N", mods = "SHIFT|CTRL", action = act.SpawnWindow },
 
-        { key = "ł", mods = "CTRL|ALT", action = act.CloseCurrentPane({ confirm = false }) },
         { key = "„", mods = "CTRL|ALT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
         { key = "ħ", mods = "CTRL|ALT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+        { key = "ł", mods = "CTRL|ALT", action = act.CloseCurrentPane({ confirm = false }) },
 
         -- Pane navigation
         -- { key = "j", mods = "CTRL", action = act.ActivatePaneDirection("Down") },
@@ -76,63 +119,13 @@ function module.apply_to_config(config)
         -- { key = "UpArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Up") },
         -- { key = "DownArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Down") },
 
-        --{key="Backspace", mods="CTRL", action=wezterm.action{SendString="\x1b[78~"} },
-
-        -- to disambiguate from ^H
-        { key="Backspace", mods="CTRL", action = act.SendKey{ key = "Backspace", mods ="SHIFT|ALT"} },
-
-        -- { key="e", mods="CTRL|ALT", action = act.SendKey{ key = "e", mods ="CTRL|ALT"} },
-
-        { key = '*', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay},
-        { key = "ù", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncher },
+            -- Debug
+        { key = '*', mods = 'CTRL|SHIFT', action = wez.action.ShowDebugOverlay},
+        { key = "ù", mods = "CTRL|SHIFT", action = wez.action.ShowLauncher },
 
     }--config keys
 end
 
---   --smart copy/interuptn
---action = wezterm.action_callback(function(window, pane)
---    if pane:is_alt_screen_active() then
---     -- allow "full screen" TUI apps to receive and handle CTRL-C for themselves
---     window:perform_action(wezterm.action.SendKey{key='c', mods='CTRL'})
---    else
---     -- otherwise, treat it as a copy operation
---     window:perform_action(wezterm.action{ CopyTo = 'ClipboardAndPrimarySelection' })
---    end
---end)
---
-return module
 
---smart copy/interupt
-  --  {
-  --    key = 'c',
-  --    mods = 'CTRL',
-  --    action = wezterm.action_callback(function(window, pane)
-  --      local sel = window:get_selection_text_for_pane(pane)
-  --      if (not sel or sel == '') then
-  --        window:perform_action(wezterm.action.SendKey{ key='c', mods='CTRL' }, pane)
-  --      else
-  --        window:perform_action(wezterm.action{ CopyTo = 'ClipboardAndPrimarySelection' }, pane)
-  --      end
-  --    end),
-  --  },
-  --  { key = 'v', mods = 'CTRL', action = wezterm.action.Paste },
-  --  { key = 'v', mods = 'SHIFT|CTRL', action = wezterm.action_callback(function(window, pane)
-  --    window:perform_action(wezterm.action.SendKey{ key='v', mods='CTRL' }, pane) end),
-  --  },
-  --  { key = 'V', mods = 'SHIFT|CTRL', action = wezterm.action_callback(function(window, pane)
-  --    window:perform_action(wezterm.action.SendKey{ key='v', mods='CTRL' }, pane) end),
-  --  },
-  --  { key = 'c', mods = 'ALT', action = wezterm.action.Copy },
-  --  { key = 'v', mods = 'ALT', action = wezterm.action.Paste },
-  --
-  --
-  --},  -- smart copy/interuptn
---  --action = wezterm.action_callback(function(window, pane)
---   if pane:is_alt_screen_active() then
---     -- allow "full screen" TUI apps to receive and handle CTRL-C for themselves
---     window:perform_action(wezterm.action.SendKey{key='c', mods='CTRL'})
---   else
---     -- otherwise, treat it as a copy operation
---     window:perform_action(wezterm.action{ CopyTo = 'ClipboardAndPrimarySelection' })
---   end
---end)
+--------
+return M
