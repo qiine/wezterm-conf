@@ -35,9 +35,10 @@ function M.apply_to_config(config)
                 if pane:is_alt_screen_active() then  -- Is in some TUI
                     window:perform_action(act.SendKey({key='c', mods='CTRL'}), pane)
                 else
-                    window:perform_action(act({CopyTo = 'ClipboardAndPrimarySelection'}), pane)
+                    window:perform_action(act.CopyTo("ClipboardAndPrimarySelection"), pane)
                 end
             end),
+            -- alt_screen = false,
         },
         {
             key = "v",
@@ -46,11 +47,11 @@ function M.apply_to_config(config)
                 if pane:is_alt_screen_active() then  -- Is in some TUI
                     window:perform_action(act.SendKey({ key = "v", mods = "CTRL" }), pane)
                 else
-                    window:perform_action(act.PasteFrom("Clipboard"), pane)
+                    window:perform_action(act.PasteFrom('Clipboard'), pane)
                 end
             end),
+            -- alt_screen = false,
         },
-
 
         --{key="Backspace", mods="CTRL", action=wezterm.action{SendString="\x1b[78~"} },
 
@@ -80,6 +81,10 @@ function M.apply_to_config(config)
             end),
         },
 
+        -- interupt kill proc
+        { key = "¢", mods = "CTRL", action = act.SendKey({ key = "c", mods = "CTRL" }) },
+
+
         -- ## Tabs
         {
             key = "w",
@@ -97,8 +102,14 @@ function M.apply_to_config(config)
                 end
             end),
         },
+        {
+            key = "ł",
+            mods = "CTRL",
+            action = act.CloseCurrentTab({confirm = false}),
+        },
         { key = "ŧ", mods = "CTRL", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "Tab", mods = "CTRL|ALT", action = act.ActivateTabRelative(1) }, --Cycle tabs
+
 
         -- ## Panes
         -- { key = "N", mods = "SHIFT|CTRL", action = act.SpawnWindow },
